@@ -1,19 +1,12 @@
-import mysql from "mysql2/promise"
+import mysql from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
-export const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "phone_store_db",
-});
-
-export const testConnection = async () => {
-    try {
-        const connection = await pool.getConnection();
-        console.log("Database connected successfully");
-        connection.release();
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-};
+export const pool = mysql
+  .createPool({
+    host: process.env.MARIADB_HOST,
+    user: process.env.MARIADB_USER,
+    password: process.env.MARIADB_PASSWORD,
+    database: process.env.MARIADB_DATABASE,
+  })
+  .promise();
